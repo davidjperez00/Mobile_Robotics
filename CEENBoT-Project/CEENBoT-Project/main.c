@@ -72,12 +72,12 @@ void move_forward_in_inches_p1_1(double distance)
 	// TODO: Determine necessary motor control options
 	// before engaging motors
 	
-	double left_additional_steps = (0.0154 * num_steps);
+	double left_additional_steps = (0.015 * num_steps);
 	//double right_additional_steps = 0;
 	
 	// The longer the distance the greater the overshoot.
 	// Reduce each distance by .8%.
-	num_steps = num_steps - (0.018 * num_steps);
+	num_steps = num_steps - (0.0185 * num_steps);
 	
 	// Compensate for shorter distance undershoots
 	num_steps += 4;
@@ -145,14 +145,14 @@ void turn_90_degrees(bool turn_left)
 	{
 		// Turn left (~90 degrees)
 		STEPPER_move_stwt(STEPPER_BOTH,
-		STEPPER_REV, 129, 600, 400, STEPPER_BRK_OFF,  // left
+		STEPPER_REV, 131.5, 600, 400, STEPPER_BRK_OFF,  // left
 		STEPPER_FWD, 115, 600, 400, STEPPER_BRK_OFF); // right
 		
 	} else {
 		// Turn right (~90 degrees)
 		STEPPER_move_stwt(STEPPER_BOTH,
 		STEPPER_FWD, 115, 600, 400, STEPPER_BRK_OFF,  // left
-		STEPPER_REV, 129, 600, 400, STEPPER_BRK_OFF); // right
+		STEPPER_REV, 130.5, 600, 400, STEPPER_BRK_OFF); // right
 	}
 }
 

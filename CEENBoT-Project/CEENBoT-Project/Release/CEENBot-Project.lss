@@ -190,7 +190,7 @@ Disassembly of section .text:
      242:	f3 94       	inc	r15
      244:	08 e5       	ldi	r16, 0x58	; 88
      246:	12 e0       	ldi	r17, 0x02	; 2
-     248:	21 e8       	ldi	r18, 0x81	; 129
+     248:	23 e8       	ldi	r18, 0x83	; 131
      24a:	30 e0       	ldi	r19, 0x00	; 0
      24c:	41 e0       	ldi	r20, 0x01	; 1
      24e:	62 e0       	ldi	r22, 0x02	; 2
@@ -357,9 +357,9 @@ Disassembly of section .text:
      39e:	0e 94 6a 14 	call	0x28d4	; 0x28d4 <__divsf3>
      3a2:	6b 01       	movw	r12, r22
      3a4:	7c 01       	movw	r14, r24
-     3a6:	2c eb       	ldi	r18, 0xBC	; 188
-     3a8:	34 e7       	ldi	r19, 0x74	; 116
-     3aa:	43 e9       	ldi	r20, 0x93	; 147
+     3a6:	20 e5       	ldi	r18, 0x50	; 80
+     3a8:	3d e8       	ldi	r19, 0x8D	; 141
+     3aa:	47 e9       	ldi	r20, 0x97	; 151
      3ac:	5c e3       	ldi	r21, 0x3C	; 60
      3ae:	0e 94 b4 15 	call	0x2b68	; 0x2b68 <__mulsf3>
      3b2:	9b 01       	movw	r18, r22
@@ -377,9 +377,9 @@ Disassembly of section .text:
      3ce:	0e 94 0b 15 	call	0x2a16	; 0x2a16 <floor>
      3d2:	2b 01       	movw	r4, r22
      3d4:	3c 01       	movw	r6, r24
-     3d6:	28 e4       	ldi	r18, 0x48	; 72
-     3d8:	30 e5       	ldi	r19, 0x50	; 80
-     3da:	4c e7       	ldi	r20, 0x7C	; 124
+     3d6:	2f e8       	ldi	r18, 0x8F	; 143
+     3d8:	32 ec       	ldi	r19, 0xC2	; 194
+     3da:	45 e7       	ldi	r20, 0x75	; 117
      3dc:	5c e3       	ldi	r21, 0x3C	; 60
      3de:	c7 01       	movw	r24, r14
      3e0:	b6 01       	movw	r22, r12
@@ -520,7 +520,7 @@ Disassembly of section .text:
      4f8:	88 e5       	ldi	r24, 0x58	; 88
      4fa:	8f 93       	push	r24
      4fc:	1f 92       	push	r1
-     4fe:	81 e8       	ldi	r24, 0x81	; 129
+     4fe:	82 e8       	ldi	r24, 0x82	; 130
      500:	8f 93       	push	r24
      502:	88 24       	eor	r8, r8
      504:	83 94       	inc	r8
