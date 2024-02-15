@@ -190,7 +190,7 @@ Disassembly of section .text:
      242:	f3 94       	inc	r15
      244:	08 e5       	ldi	r16, 0x58	; 88
      246:	12 e0       	ldi	r17, 0x02	; 2
-     248:	2a e7       	ldi	r18, 0x7A	; 122
+     248:	21 e8       	ldi	r18, 0x81	; 129
      24a:	30 e0       	ldi	r19, 0x00	; 0
      24c:	41 e0       	ldi	r20, 0x01	; 1
      24e:	62 e0       	ldi	r22, 0x02	; 2
@@ -377,9 +377,9 @@ Disassembly of section .text:
      3ce:	0e 94 0b 15 	call	0x2a16	; 0x2a16 <floor>
      3d2:	2b 01       	movw	r4, r22
      3d4:	3c 01       	movw	r6, r24
-     3d6:	2f e6       	ldi	r18, 0x6F	; 111
-     3d8:	32 e1       	ldi	r19, 0x12	; 18
-     3da:	43 e8       	ldi	r20, 0x83	; 131
+     3d6:	28 e4       	ldi	r18, 0x48	; 72
+     3d8:	30 e5       	ldi	r19, 0x50	; 80
+     3da:	4c e7       	ldi	r20, 0x7C	; 124
      3dc:	5c e3       	ldi	r21, 0x3C	; 60
      3de:	c7 01       	movw	r24, r14
      3e0:	b6 01       	movw	r22, r12
@@ -520,7 +520,7 @@ Disassembly of section .text:
      4f8:	88 e5       	ldi	r24, 0x58	; 88
      4fa:	8f 93       	push	r24
      4fc:	1f 92       	push	r1
-     4fe:	8a e7       	ldi	r24, 0x7A	; 122
+     4fe:	81 e8       	ldi	r24, 0x81	; 129
      500:	8f 93       	push	r24
      502:	88 24       	eor	r8, r8
      504:	83 94       	inc	r8
@@ -644,7 +644,7 @@ Disassembly of section .text:
 
 00000610 <CBOT_main>:
      610:	0e 94 79 04 	call	0x8f2	; 0x8f2 <STEPPER_open>
-     614:	0c 94 a4 02 	jmp	0x548	; 0x548 <lab_p2_app>
+     614:	0c 94 c5 02 	jmp	0x58a	; 0x58a <lab_p3_app>
 
 00000618 <main>:
      618:	0e 94 e3 06 	call	0xdc6	; 0xdc6 <CBOT_ISR_init>

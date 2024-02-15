@@ -72,7 +72,7 @@ void move_forward_in_inches_p1_1(double distance)
 	// TODO: Determine necessary motor control options
 	// before engaging motors
 	
-	double left_additional_steps = (0.016 * num_steps);
+	double left_additional_steps = (0.0154 * num_steps);
 	//double right_additional_steps = 0;
 	
 	// The longer the distance the greater the overshoot.
@@ -145,14 +145,14 @@ void turn_90_degrees(bool turn_left)
 	{
 		// Turn left (~90 degrees)
 		STEPPER_move_stwt(STEPPER_BOTH,
-		STEPPER_REV, 122.25, 600, 400, STEPPER_BRK_OFF,  // left
+		STEPPER_REV, 129, 600, 400, STEPPER_BRK_OFF,  // left
 		STEPPER_FWD, 115, 600, 400, STEPPER_BRK_OFF); // right
 		
 	} else {
 		// Turn right (~90 degrees)
 		STEPPER_move_stwt(STEPPER_BOTH,
 		STEPPER_FWD, 115, 600, 400, STEPPER_BRK_OFF,  // left
-		STEPPER_REV, 122.25, 600, 400, STEPPER_BRK_OFF); // right
+		STEPPER_REV, 129, 600, 400, STEPPER_BRK_OFF); // right
 	}
 }
 
@@ -195,30 +195,37 @@ void lab_p3_app(void)
 	// Go forward 4ft then turn right
 	move_forward_in_inches_p1_1(48);
 	turn_90_degrees(false);
-	
+	//TMRSRVC_delay( TMR_SECS( 3 ) );
+		
 	// Drive forward 5 ft then turn right
 	move_forward_in_inches_p1_1(60);
 	turn_90_degrees(false);
+	//TMRSRVC_delay( TMR_SECS( 0.5 ) );
 	
 	// Drive 2 ft then turn left
 	move_forward_in_inches_p1_1(24);
 	turn_90_degrees(true);
+	//TMRSRVC_delay( TMR_SECS( 0.5 ) );
 
 	// Drive 2 ft then turn left
 	move_forward_in_inches_p1_1(24);
 	turn_90_degrees(true);
+	//TMRSRVC_delay( TMR_SECS( 0.5 ) );
 	
 	// Drive 2 ft then turn right	
 	move_forward_in_inches_p1_1(24);
 	turn_90_degrees(false);
+	//TMRSRVC_delay( TMR_SECS( 0.5 ) );
 	
 	// Drive 2 ft then turn right
 	move_forward_in_inches_p1_1(24);
 	turn_90_degrees(false);
+	//TMRSRVC_delay( TMR_SECS( 0.5 ) );
 	
 	// Drive 4 ft then turn right
 	move_forward_in_inches_p1_1(48);
 	turn_90_degrees(false);
+	//TMRSRVC_delay( TMR_SECS( 0.5 ) );
 	
 	// Drive 9 ft
 	move_forward_in_inches_p1_1(108);
@@ -234,10 +241,10 @@ void CBOT_main(void)
 	//lab_1_app();
 	
 	// Lab 2 p 2:
-	lab_p2_app();
+	//lab_p2_app();
 	
 	// Lab 2 p 3:
-	//lab_p3_app()
+	lab_p3_app();
 	
 	
 
