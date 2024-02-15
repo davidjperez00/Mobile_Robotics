@@ -251,7 +251,7 @@ void lab_p4_app(void)
 	// turns needed to go around the circle
 	double distance_per_step = circumference/20;
 	
-	for (int i = 0; i < 22; i++){
+	for (int i = 0; i < 24; i++){
 		// move forward by step distance
 		move_forward_in_inches_p1_1(distance_per_step);
 		
