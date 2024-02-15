@@ -145,14 +145,14 @@ void turn_90_degrees(bool turn_left)
 	{
 		// Turn left (~90 degrees)
 		STEPPER_move_stwt(STEPPER_BOTH,
-		STEPPER_REV, 122.25, 600, 400, STEPPER_BRK_OFF,  // left
+		STEPPER_REV, 130, 600, 400, STEPPER_BRK_OFF,  // left
 		STEPPER_FWD, 115, 600, 400, STEPPER_BRK_OFF); // right
 		
 	} else {
 		// Turn right (~90 degrees)
 		STEPPER_move_stwt(STEPPER_BOTH,
 		STEPPER_FWD, 115, 600, 400, STEPPER_BRK_OFF,  // left
-		STEPPER_REV, 122.25, 600, 400, STEPPER_BRK_OFF); // right
+		STEPPER_REV, 130.5, 600, 400, STEPPER_BRK_OFF); // right
 	}
 }
 

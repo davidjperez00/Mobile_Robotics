@@ -190,7 +190,7 @@ Disassembly of section .text:
      242:	f3 94       	inc	r15
      244:	08 e5       	ldi	r16, 0x58	; 88
      246:	12 e0       	ldi	r17, 0x02	; 2
-     248:	2a e7       	ldi	r18, 0x7A	; 122
+     248:	22 e8       	ldi	r18, 0x82	; 130
      24a:	30 e0       	ldi	r19, 0x00	; 0
      24c:	41 e0       	ldi	r20, 0x01	; 1
      24e:	62 e0       	ldi	r22, 0x02	; 2
@@ -520,7 +520,7 @@ Disassembly of section .text:
      4f8:	88 e5       	ldi	r24, 0x58	; 88
      4fa:	8f 93       	push	r24
      4fc:	1f 92       	push	r1
-     4fe:	8a e7       	ldi	r24, 0x7A	; 122
+     4fe:	82 e8       	ldi	r24, 0x82	; 130
      500:	8f 93       	push	r24
      502:	88 24       	eor	r8, r8
      504:	83 94       	inc	r8
