@@ -166,10 +166,7 @@ void lab_p2_app(void)
 
 		// Turn right 90 degrees.
 		turn_90_degrees(false);
-		
-		// Delay 20 seconds.
-		TMRSRVC_delay( TMR_SECS( 6 ) );
-		
+				
 		if (i == 2) {
 			// last iteration completes the square extra 
 			// turn not required
