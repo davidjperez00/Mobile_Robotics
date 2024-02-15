@@ -42,7 +42,8 @@ main.d main.o: .././main.c \
  ../../../../../Github/ceenbot-api/lib/lib-includes/pwm324v221.h \
  ../../../../../Github/ceenbot-api/lib/lib-includes/bat324v221.h \
  ../../../../../Github/ceenbot-api/lib/lib-includes/cbot324v221.h \
- ../../../../../Github/ceenbot-api/lib/lib-includes/capi324v221.h
+ ../../../../../Github/ceenbot-api/lib/lib-includes/capi324v221.h \
+ c:\program\ files\ (x86)\atmel\studio\7.0\toolchain\avr8\avr8-gnu-toolchain\lib\gcc\avr\5.4.0\include\stdbool.h
 
 ../../../../../Github/ceenbot-api/lib/lib-includes/capi324v221.h:
 
@@ -131,3 +132,5 @@ c:\program\ files\ (x86)\atmel\studio\7.0\toolchain\avr8\avr8-gnu-toolchain\avr\
 ../../../../../Github/ceenbot-api/lib/lib-includes/cbot324v221.h:
 
 ../../../../../Github/ceenbot-api/lib/lib-includes/capi324v221.h:
+
+c:\program\ files\ (x86)\atmel\studio\7.0\toolchain\avr8\avr8-gnu-toolchain\lib\gcc\avr\5.4.0\include\stdbool.h:

@@ -8,6 +8,7 @@
 
 #include "capi324v221.h"
 #include <math.h> 
+#include "stdbool.h"
 
 # define pi 3.14159265359
 # define WHEEL_RADIUS 1.6250 // inches
@@ -71,35 +72,28 @@ void move_forward_in_inches_p1_1(double distance)
 	// TODO: Determine necessary motor control options
 	// before engaging motors
 	
-	double left_additional_steps = (0.014 * num_steps);
+	double left_additional_steps = (0.016 * num_steps);
 	//double right_additional_steps = 0;
 	
 	// The longer the distance the greater the overshoot.
 	// Reduce each distance by .8%.
-	num_steps = num_steps - (0.02 * num_steps);
+	num_steps = num_steps - (0.018 * num_steps);
 	
 	// Compensate for shorter distance undershoots
 	num_steps += 4;
 	
 	// Move Both wheels forward
 	STEPPER_move_stwt(STEPPER_BOTH,
-	STEPPER_FWD, floor(num_steps+left_additional_steps), 300, 200, STEPPER_BRK_OFF,  // left
-	STEPPER_FWD, floor(num_steps), 300, 200, STEPPER_BRK_OFF); // right
+	STEPPER_FWD, floor(num_steps+left_additional_steps), 400, 200, STEPPER_BRK_OFF,  // left
+	STEPPER_FWD, floor(num_steps), 400, 200, STEPPER_BRK_OFF); // right
 	
 	// todo: consider more steps here for difference distances
 	//			or make control system for correction.
 	
 }
 
-
-//void motor_controller()
-
-
-void CBOT_main(void)
+void lab_1_app(void)
 {
-	// Open STEPPER module for use
-	STEPPER_open();
-
 	// Index for robot movement tasks
 	LabPart1 lab_index = LP1_0;
 	
@@ -108,41 +102,142 @@ void CBOT_main(void)
 	{
 		switch (lab_index) {
 			case LP1_0:
-				// Drive 6 inches forward
-				move_forward_in_inches_p1_1(6);
-				
-				break;
+			// Drive 6 inches forward
+			move_forward_in_inches_p1_1(6);
+			
+			break;
 
 			case LP1_1:
-				// Drive 12 inches forward
-				move_forward_in_inches_p1_1(12);
-				
-				break;
+			// Drive 12 inches forward
+			move_forward_in_inches_p1_1(12);
+			
+			break;
 			case LP1_2:
-				// Drive 18 inches forward
-				move_forward_in_inches_p1_1(18);
-				
-				break;
-				
+			// Drive 18 inches forward
+			move_forward_in_inches_p1_1(18);
+			
+			break;
+			
 			case LP1_3:
-				// Drive 24 inches forward
-				move_forward_in_inches_p1_1(24);
-				
-				break;
+			// Drive 24 inches forward
+			move_forward_in_inches_p1_1(24);
+			
+			break;
 			case NUM_LABPART1:
 			default:
 			// intentional fall through
-				return;
-				
+			return;
+			
 		}
 		
-		// Delay 9 seconds.	
+		// Delay 9 seconds.
 		TMRSRVC_delay( TMR_SECS( 20 ) );
 
 		// Proceed to next experiment
 		lab_index++;
 	}
 	
+}
+
+void turn_90_degrees(bool turn_left)
+{
+	if (turn_left) 
+	{
+		// Turn left (~90 degrees)
+		STEPPER_move_stwt(STEPPER_BOTH,
+		STEPPER_REV, 122.25, 600, 400, STEPPER_BRK_OFF,  // left
+		STEPPER_FWD, 115, 600, 400, STEPPER_BRK_OFF); // right
+		
+	} else {
+		// Turn right (~90 degrees)
+		STEPPER_move_stwt(STEPPER_BOTH,
+		STEPPER_FWD, 115, 600, 400, STEPPER_BRK_OFF,  // left
+		STEPPER_REV, 122.25, 600, 400, STEPPER_BRK_OFF); // right
+	}
+}
+
+// Move robot in a 4ft by 4ft square.
+void lab_p2_app(void)
+{
+	for (int i = 0; i < 3; i++)
+	{
+		// Drive forward by 4ft (48 inches)
+		move_forward_in_inches_p1_1(48);
+
+		// Turn right 90 degrees.
+		turn_90_degrees(false);
+		
+		// Delay 20 seconds.
+		TMRSRVC_delay( TMR_SECS( 6 ) );
+		
+		if (i == 2) {
+			// last iteration completes the square extra 
+			// turn not required
+			move_forward_in_inches_p1_1(48);
+		}
+	}
+}
+
+
+// Drive the robot around a predetermined maze
+// Maze course:
+/*
+	 __5ft___      ___2ft__
+	|       |     |        |
+ 4ft|		| 2ft | 2ft    |
+	^		|_____|        | 4ft
+	|         2ft          |
+    -----------------------
+			9ft
+*/
+void lab_p3_app(void)
+{
+	// Go forward 4ft then turn right
+	move_forward_in_inches_p1_1(48);
+	turn_90_degrees(false);
+	
+	// Drive forward 5 ft then turn right
+	move_forward_in_inches_p1_1(60);
+	turn_90_degrees(false);
+	
+	// Drive 2 ft then turn left
+	move_forward_in_inches_p1_1(24);
+	turn_90_degrees(true);
+
+	// Drive 2 ft then turn left
+	move_forward_in_inches_p1_1(24);
+	turn_90_degrees(true);
+	
+	// Drive 2 ft then turn right	
+	move_forward_in_inches_p1_1(24);
+	turn_90_degrees(false);
+	
+	// Drive 2 ft then turn right
+	move_forward_in_inches_p1_1(24);
+	turn_90_degrees(false);
+	
+	// Drive 4 ft then turn right
+	move_forward_in_inches_p1_1(48);
+	turn_90_degrees(false);
+	
+	// Drive 9 ft
+	move_forward_in_inches_p1_1(108);
+}
+
+
+void CBOT_main(void)
+{
+	// Open STEPPER module for use
+	STEPPER_open();
+
+	// perform lab 2 p 1 tasks:
+	//lab_1_app();
+	
+	// Lab 2 p 2:
+	lab_p2_app();
+	
+	// Lab 2 p 3:
+	//lab_p3_app()
 	
 	
 
