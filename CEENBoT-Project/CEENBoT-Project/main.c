@@ -232,6 +232,36 @@ void lab_p3_app(void)
 }
 
 
+void turn_right_18_degrees (void)
+{
+	// left: 115 for 90 degree turn
+	// left: 129 for 90 degree turn
+	STEPPER_move_stwt(STEPPER_BOTH,
+	STEPPER_FWD, 115/4.2, 800, 400, STEPPER_BRK_OFF,  // left
+	STEPPER_REV, 129/4.2, 800, 400, STEPPER_BRK_OFF); // right
+}
+
+
+// For circle with 2ft diameter
+void lab_p4_app(void)
+{
+	double circumference = 75.39822; // 2*pi*12(inches)
+	
+	// Dividing circumference by the number of
+	// turns needed to go around the circle
+	double distance_per_step = circumference/20;
+	
+	for (int i = 0; i < 22; i++){
+		// move forward by step distance
+		move_forward_in_inches_p1_1(distance_per_step);
+		
+		// turn wheels 1.8 degrees
+		turn_right_18_degrees();
+		
+	}
+
+}
+
 void CBOT_main(void)
 {
 	// Open STEPPER module for use
@@ -244,9 +274,10 @@ void CBOT_main(void)
 	//lab_p2_app();
 	
 	// Lab 2 p 3:
-	lab_p3_app();
+	//lab_p3_app();
 	
-	
+	// Lab 2 p 4: 
+	lab_p4_app();
 
 	// moc def:
 	// STEPPER_move_stwt(motors, motor_direction, num_steps, steps_per_sec, acceleration (in steps/sec^2), brake_on_or_off)
