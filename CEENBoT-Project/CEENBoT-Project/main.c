@@ -137,7 +137,7 @@ void CBOT_main(void)
 		}
 		
 		// Delay 9 seconds.	
-		TMRSRVC_delay( TMR_SECS( 20 ) );
+		TMRSRVC_delay( TMR_SECS( 4 ) );
 
 		// Proceed to next experiment
 		lab_index++;

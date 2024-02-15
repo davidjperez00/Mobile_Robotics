@@ -423,8 +423,8 @@ Disassembly of section .text:
      438:	80 ec       	ldi	r24, 0xC0	; 192
      43a:	91 e4       	ldi	r25, 0x41	; 65
      43c:	0e 94 7f 01 	call	0x2fe	; 0x2fe <move_forward_in_inches_p1_1>
-     440:	80 e2       	ldi	r24, 0x20	; 32
-     442:	9e e4       	ldi	r25, 0x4E	; 78
+     440:	80 ea       	ldi	r24, 0xA0	; 160
+     442:	9f e0       	ldi	r25, 0x0F	; 15
      444:	0e 94 93 05 	call	0xb26	; 0xb26 <TMRSRVC_delay>
      448:	cf 5f       	subi	r28, 0xFF	; 255
      44a:	c4 30       	cpi	r28, 0x04	; 4
