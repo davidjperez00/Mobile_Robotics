@@ -1,4 +1,5 @@
-main.d main.o: .././main.c .././src/apps.h \
+src/apps.d src/apps.o: ../src/apps.c ../src/apps.h ../src/motor_control.h \
+ c:\program\ files\ (x86)\atmel\studio\7.0\toolchain\avr8\avr8-gnu-toolchain\lib\gcc\avr\5.4.0\include\stdbool.h \
  ../../../../../Github/ceenbot-api/lib/lib-includes/capi324v221.h \
  ../../../../../Github/ceenbot-api/lib/lib-includes/utils324v221.h \
  c:\program\ files\ (x86)\atmel\studio\7.0\toolchain\avr8\avr8-gnu-toolchain\avr\include\util\delay.h \
@@ -44,7 +45,11 @@ main.d main.o: .././main.c .././src/apps.h \
  ../../../../../Github/ceenbot-api/lib/lib-includes/cbot324v221.h \
  ../../../../../Github/ceenbot-api/lib/lib-includes/capi324v221.h
 
-.././src/apps.h:
+../src/apps.h:
+
+../src/motor_control.h:
+
+c:\program\ files\ (x86)\atmel\studio\7.0\toolchain\avr8\avr8-gnu-toolchain\lib\gcc\avr\5.4.0\include\stdbool.h:
 
 ../../../../../Github/ceenbot-api/lib/lib-includes/capi324v221.h:
 

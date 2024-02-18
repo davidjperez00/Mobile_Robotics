@@ -32,12 +32,15 @@ LIB_DEP:=
 LINKER_SCRIPT_DEP:=
 
 # Every subdirectory with source files must be described here
-SUBDIRS := 
+SUBDIRS :=  \
+../src
 
 
 # Add inputs and outputs from these tool invocations to the build variables 
 C_SRCS +=  \
-../main.c
+../main.c \
+../src/apps.c \
+../src/motor_control.c
 
 
 PREPROCESSING_SRCS += 
@@ -47,16 +50,24 @@ ASM_SRCS +=
 
 
 OBJS +=  \
-main.o
+main.o \
+src/apps.o \
+src/motor_control.o
 
 OBJS_AS_ARGS +=  \
-main.o
+main.o \
+src/apps.o \
+src/motor_control.o
 
 C_DEPS +=  \
-main.d
+main.d \
+src/apps.d \
+src/motor_control.d
 
 C_DEPS_AS_ARGS +=  \
-main.d
+main.d \
+src/apps.d \
+src/motor_control.d
 
 OUTPUT_FILE_PATH +=CEENBot-Project.elf
 
@@ -73,6 +84,20 @@ LINKER_SCRIPT_DEP+=
 
 # AVR32/GNU C Compiler
 ./main.o: .././main.c
+	@echo Building file: $<
+	@echo Invoking: AVR/GNU C Compiler : 5.4.0
+	$(QUOTE)C:\Program Files (x86)\Atmel\Studio\7.0\toolchain\avr8\avr8-gnu-toolchain\bin\avr-gcc.exe$(QUOTE)  -x c -funsigned-char -funsigned-bitfields -DF_CPU=20000000UL -DNDEBUG  -I"C:\Program Files (x86)\Atmel\Studio\7.0\Packs\atmel\ATmega_DFP\1.3.300\include" -I"../../../../../Github/ceenbot-api/lib/lib-includes" -I"../../../../../capi324v221-v1.09.002R"  -Os -fdata-sections -fpack-struct -fshort-enums -Wall -mmcu=atmega324p -B "C:\Program Files (x86)\Atmel\Studio\7.0\Packs\atmel\ATmega_DFP\1.3.300\gcc\dev\atmega324p" -c -std=gnu99 -MD -MP -MF "$(@:%.o=%.d)" -MT"$(@:%.o=%.d)" -MT"$(@:%.o=%.o)"   -o "$@" "$<" 
+	@echo Finished building: $<
+	
+
+src/apps.o: ../src/apps.c
+	@echo Building file: $<
+	@echo Invoking: AVR/GNU C Compiler : 5.4.0
+	$(QUOTE)C:\Program Files (x86)\Atmel\Studio\7.0\toolchain\avr8\avr8-gnu-toolchain\bin\avr-gcc.exe$(QUOTE)  -x c -funsigned-char -funsigned-bitfields -DF_CPU=20000000UL -DNDEBUG  -I"C:\Program Files (x86)\Atmel\Studio\7.0\Packs\atmel\ATmega_DFP\1.3.300\include" -I"../../../../../Github/ceenbot-api/lib/lib-includes" -I"../../../../../capi324v221-v1.09.002R"  -Os -fdata-sections -fpack-struct -fshort-enums -Wall -mmcu=atmega324p -B "C:\Program Files (x86)\Atmel\Studio\7.0\Packs\atmel\ATmega_DFP\1.3.300\gcc\dev\atmega324p" -c -std=gnu99 -MD -MP -MF "$(@:%.o=%.d)" -MT"$(@:%.o=%.d)" -MT"$(@:%.o=%.o)"   -o "$@" "$<" 
+	@echo Finished building: $<
+	
+
+src/motor_control.o: ../src/motor_control.c
 	@echo Building file: $<
 	@echo Invoking: AVR/GNU C Compiler : 5.4.0
 	$(QUOTE)C:\Program Files (x86)\Atmel\Studio\7.0\toolchain\avr8\avr8-gnu-toolchain\bin\avr-gcc.exe$(QUOTE)  -x c -funsigned-char -funsigned-bitfields -DF_CPU=20000000UL -DNDEBUG  -I"C:\Program Files (x86)\Atmel\Studio\7.0\Packs\atmel\ATmega_DFP\1.3.300\include" -I"../../../../../Github/ceenbot-api/lib/lib-includes" -I"../../../../../capi324v221-v1.09.002R"  -Os -fdata-sections -fpack-struct -fshort-enums -Wall -mmcu=atmega324p -B "C:\Program Files (x86)\Atmel\Studio\7.0\Packs\atmel\ATmega_DFP\1.3.300\gcc\dev\atmega324p" -c -std=gnu99 -MD -MP -MF "$(@:%.o=%.d)" -MT"$(@:%.o=%.d)" -MT"$(@:%.o=%.o)"   -o "$@" "$<" 
