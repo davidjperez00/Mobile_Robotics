@@ -1,23 +1,24 @@
 /*
  * Auth:   David Perez
- * Date:   Today's Date
+ * Date:   2/21/2024
  * Course: ECEN3450-Mobile Robotics I
- * Lab#:   Lab 1
- * Desc :  Print text to CEENBoT LCD Display
+ * Lab#:   Lab 3
+ * Desc :  Main file for controlling the CEENBoT robot.
  */ 
 
 #include "capi324v221.h"
+#include "stdbool.h"
+#include "src/app.h"
+#include "avr/interrupt.h"
 
 void CBOT_main(void)
 {
-	// Open the LCD subsystem module.
-	LCD_open();
 	
-	// Clear the display.
-	LCD_clear();
-	
-	// Say, "Hello"
-	LCD_printf( "Hello, David Perez!\n");
+	// Initialize the servo motor system
+	STEPPER_open();
+		
+	// enable interrupts?
+	//sei();
 	
 	// Loop forever
     while (1);
