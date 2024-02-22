@@ -13,7 +13,7 @@
 
 void IR_AVOID (void);
 void CRUISE (void);
-
+void app_main (void);
 
 
 #endif /* APP_H_ */

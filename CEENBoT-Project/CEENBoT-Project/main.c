@@ -20,7 +20,9 @@ void CBOT_main(void)
 	// enable interrupts?
 	//sei();
 	
-	// Loop forever
-    while (1);
+	app_main();
+	
+	//// Loop forever
+    //while (1);
 }
 
