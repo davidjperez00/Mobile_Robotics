@@ -83,8 +83,8 @@ void move_backwards_in_inches_stwt(double distance)
 	
 	// Move Both wheels forward
 	STEPPER_move_stwt(STEPPER_BOTH,
-	STEPPER_FWD, floor(num_steps+left_additional_steps), 200, 200, STEPPER_BRK_OFF,  // left
-	STEPPER_FWD, floor(num_steps), 200, 200, STEPPER_BRK_OFF); // right
+	STEPPER_REV, floor(num_steps+left_additional_steps), 200, 200, STEPPER_BRK_OFF,  // left
+	STEPPER_REV, floor(num_steps), 200, 200, STEPPER_BRK_OFF); // right
 }
 
 void turn_90_degrees(bool turn_left)
@@ -115,13 +115,13 @@ void reverse_backup_60_degrees(bool turn_left)
 	{
 		// Turn left (~90 degrees)
 		STEPPER_move_stwt(STEPPER_BOTH,
-		STEPPER_REV, 115, 200, 400, STEPPER_BRK_OFF,  // left
-		STEPPER_REV, 87, 200, 400, STEPPER_BRK_OFF); // right
+		STEPPER_REV, 175, 200, 400, STEPPER_BRK_OFF,  // left
+		STEPPER_REV, 30, 200, 400, STEPPER_BRK_OFF); // right
 		
 		} else {
 		// Turn right (~90 degrees)
 		STEPPER_move_stwt(STEPPER_BOTH,
-		STEPPER_REV, 87, 200, 400, STEPPER_BRK_OFF,  // left
-		STEPPER_REV, 115, 200, 400, STEPPER_BRK_OFF); // right
+		STEPPER_REV, 30, 200, 400, STEPPER_BRK_OFF,  // left
+		STEPPER_REV, 175, 200, 400, STEPPER_BRK_OFF); // right
 	}
 }

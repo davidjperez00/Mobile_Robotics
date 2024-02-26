@@ -25,6 +25,13 @@ void IR_AVOID (void)
 		// ?? Turn the robot left
 		// Stop the robot and back up
 		STEPPER_stop(STEPPER_BOTH, STEPPER_BRK_ON);
+
+		// back up?
+		// turn the left wheel simultaneously as right wheel?
+		move_backwards_in_inches_stwt(3);
+		
+		// Turn right
+		reverse_backup_60_degrees(false);
 		
 		return;
 	}
@@ -37,10 +44,10 @@ void IR_AVOID (void)
 		
 		// back up?
 		// turn the left wheel simultaneously as right wheel?
-		move_backwards_in_inches_stwt();
+		move_backwards_in_inches_stwt(3);
 		
 		// Turn right
-		turn_90_degrees(false);
+		reverse_backup_60_degrees(false);
 		
 		return;
 		
@@ -51,9 +58,12 @@ void IR_AVOID (void)
 			
 		// Stop the robot
 		STEPPER_stop(STEPPER_BOTH, STEPPER_BRK_ON);
+		
+		// turn the left wheel simultaneously as right wheel?
+		move_backwards_in_inches_stwt(3);
 				
 		// Turn right
-		turn_90_degrees(true);
+		reverse_backup_60_degrees(true);	
 		
 		return;
 	}
