@@ -1,6 +1,5 @@
 /*
  * Auth:   David Perez
-  * File:  motor_control.c
  * Date:   2/21/2024
  * Course: ECEN3450-Mobile Robotics I
  * Lab#:   Lab 3
@@ -10,7 +9,6 @@
 #include "motor_control.h"
 #include "capi324v221.h"
 #include <math.h>
-
 
 # define pi 3.14159265359
 # define WHEEL_RADIUS 1.6250 // inches
@@ -24,6 +22,7 @@ double steps_per_distance(double distance_inches)
 	return distance_inches / DPS;
 }
 
+// @brief: Move the robot straight with blocking.
 void move_forward_in_inches_stwt(double distance)
 {
 	// Get approximate number of stepper motor steps to move
@@ -87,6 +86,8 @@ void move_backwards_in_inches_stwt(double distance)
 	STEPPER_REV, floor(num_steps), 200, 200, STEPPER_BRK_OFF); // right
 }
 
+// @brief: Rotate the center of the robot by
+//     90 degrees.
 void turn_90_degrees(bool turn_left)
 {
 	if (turn_left)
@@ -104,22 +105,20 @@ void turn_90_degrees(bool turn_left)
 	}
 }
 
-// 90/115 = 1.2777
-
-
-
-
+// @brief: Turns the robot in reverse where the outside
+//     motor is taking more steps compared to the inside
+//     motor.
 void reverse_backup_60_degrees(bool turn_left)
 {
 	if (turn_left)
 	{
-		// Turn left (~90 degrees)
+		// Turn left (~60 degrees)
 		STEPPER_move_stwt(STEPPER_BOTH,
 		STEPPER_REV, 175, 200, 400, STEPPER_BRK_OFF,  // left
 		STEPPER_REV, 30, 200, 400, STEPPER_BRK_OFF); // right
 		
 		} else {
-		// Turn right (~90 degrees)
+		// Turn right (~60 degrees)
 		STEPPER_move_stwt(STEPPER_BOTH,
 		STEPPER_REV, 30, 200, 400, STEPPER_BRK_OFF,  // left
 		STEPPER_REV, 175, 200, 400, STEPPER_BRK_OFF); // right

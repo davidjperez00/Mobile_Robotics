@@ -17,12 +17,7 @@ void CBOT_main(void)
 	// Initialize the servo motor system
 	STEPPER_open();
 		
-	// enable interrupts?
-	//sei();
-	
 	app_main();
 	
-	//// Loop forever
-    //while (1);
 }
 

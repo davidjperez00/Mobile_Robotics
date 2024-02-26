@@ -1,6 +1,5 @@
 /*
  * Auth:   David Perez
- * File:   motor_control.h
  * Date:   2/21/2024
  * Course: ECEN3450-Mobile Robotics I
  * Lab#:   Lab 3

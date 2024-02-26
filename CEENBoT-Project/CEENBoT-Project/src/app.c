@@ -11,10 +11,6 @@
 #include "motor_control.h"
 #include "capi324v221.h"
 
-//enum {
-	//
-//} DetectionState;
-
 // @brief: Avoid obstacles using the IR sensors.
 void IR_AVOID (void)
 {
@@ -22,12 +18,10 @@ void IR_AVOID (void)
 	// in an arbitrary direction (left is chosen)
 	if (ATTINY_get_IR_state(ATTINY_IR_BOTH)){
 		
-		// ?? Turn the robot left
-		// Stop the robot and back up
+		// Stop the robots forward motion
 		STEPPER_stop(STEPPER_BOTH, STEPPER_BRK_ON);
 
-		// back up?
-		// turn the left wheel simultaneously as right wheel?
+		// Back up robot away from object
 		move_backwards_in_inches_stwt(3);
 		
 		// Turn right
@@ -36,14 +30,13 @@ void IR_AVOID (void)
 		return;
 	}
 	
-	// Check if object is detected in front of the CEENBoT
+	// Check if object is detected to the left of the CEENBoT
 	if (ATTINY_get_IR_state(ATTINY_IR_LEFT)){
 		
 		// Stop the robot
 		STEPPER_stop(STEPPER_BOTH, STEPPER_BRK_ON);
 		
-		// back up?
-		// turn the left wheel simultaneously as right wheel?
+		// Back up robot away from object
 		move_backwards_in_inches_stwt(3);
 		
 		// Turn right
@@ -53,13 +46,13 @@ void IR_AVOID (void)
 		
 	}
 	
-	// Check if object is detected in front of the CEENBoT
+	// Check if object is detected in to the right of the CEENBoT
 	if (ATTINY_get_IR_state(ATTINY_IR_RIGHT)){
 			
 		// Stop the robot
 		STEPPER_stop(STEPPER_BOTH, STEPPER_BRK_ON);
 		
-		// turn the left wheel simultaneously as right wheel?
+		// Back up robot away from object
 		move_backwards_in_inches_stwt(3);
 				
 		// Turn right
@@ -79,18 +72,12 @@ void CRUISE (void)
 // @brief: Provides higher level control between CRUISE()
 //     and IR_AVOID().
 void app_main (void)
-{
-	//int i = 0;
-	
+{	
 	while ( 1 ) {
 		
 		IR_AVOID();
 		
 		CRUISE();	
 	
-		//i++;
 	}
-	
-	
-	
 }
