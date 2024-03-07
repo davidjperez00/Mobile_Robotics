@@ -16,8 +16,13 @@ void CBOT_main(void)
 	
 	// Initialize the servo motor system
 	STEPPER_open();
+
+	// Initialize the ADC subsystem
+	ADC_open();
+
+	// Set the voltage reference (we're using 5v reference).
+	ADC_set_VREF(ADC_VREF_AVCC);
 		
 	app_main();
-	
 }
 

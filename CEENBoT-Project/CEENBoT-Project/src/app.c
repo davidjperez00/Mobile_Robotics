@@ -11,6 +11,30 @@
 #include "motor_control.h"
 #include "capi324v221.h"
 
+float read_right_pr_sensor_voltage (void)
+{
+	// Set the channel we will sample from (right photo-resistor sensor)
+	ADC_set_channel(ADC_CHAN3);
+
+	// Sample the ADC
+	ADC_SAMPLE sample = ADC_sample();
+
+	// Convert the ADC sample to a voltage
+	return ( ( sample * 5.0f) / 1024);
+}
+
+float read_left_pr_sensor_voltage (void)
+{
+	// Set the channel we will sample from (left photo-resistor sensor)
+	ADC_set_channel(ADC_CHAN4);
+
+	// Sample the ADC
+	ADC_SAMPLE sample = ADC_sample();
+
+	// Convert the ADC sample to a voltage
+	return ( ( sample * 5.0f) / 1024);
+}
+
 // @brief: Avoid obstacles using the IR sensors.
 void IR_AVOID (void)
 {
