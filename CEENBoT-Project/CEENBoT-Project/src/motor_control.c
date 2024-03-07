@@ -124,3 +124,11 @@ void reverse_backup_60_degrees(bool turn_left)
 		STEPPER_REV, 175, 200, 400, STEPPER_BRK_OFF); // right
 	}
 }
+
+
+void set_motor_speeds(float left_motor_speed, int right_motor_speed)
+{
+	STEPPER_set_speed(STEPPER_LEFT, left_motor_speed);
+
+	STEPPER_set_speed(STEPPER_RIGHT, right_motor_speed);
+}

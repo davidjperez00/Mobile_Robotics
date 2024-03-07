@@ -17,5 +17,6 @@ void move_forward_in_inches_stnb(double distance, int velocity);
 void move_backwards_in_inches_stwt(double distance);
 void turn_90_degrees(bool turn_left);
 void reverse_backup_60_degrees(bool turn_left);
+void set_motor_speeds(float left_motor_speed, int right_motor_speed);
 
 #endif /* MOTOR_CONTROL_H_ */

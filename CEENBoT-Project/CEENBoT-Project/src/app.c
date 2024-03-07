@@ -7,6 +7,8 @@
  * Desc :  Provides application level control for IR sensor object avoidance.
  */ 
 
+#include "stdio.h"
+
 #include "app.h"
 #include "motor_control.h"
 #include "capi324v221.h"
@@ -34,6 +36,114 @@ float read_left_pr_sensor_voltage (void)
 	// Convert the ADC sample to a voltage
 	return ( ( sample * 5.0f) / 1024);
 }
+
+
+
+void display_pr_readings(float left_sensor, float right_sensor)
+{
+	// Create a string with both values:
+	char lcd_string[60];
+	
+	// Populate string with sensor voltages
+	sprintf(lcd_string, "left_sensor = %.03f\r\n right_sensor = %.04f\r\n", left_sensor, right_sensor);
+
+		
+	// clear the display before printing to it:
+	LCD_clear();
+
+	// Put string on LCD display.
+	LCD_printf(lcd_string);
+}
+
+
+// @brief: Provides higher level control between CRUISE()
+//     and IR_AVOID().
+void app_main (ReactiveBehavior desired_behavior)
+{
+	while ( 1 ) {
+		
+		// Read both sensors:
+		float left_reading = read_left_pr_sensor_voltage();
+		float right_reading = read_right_pr_sensor_voltage();
+
+		// Print to the LCD screen
+		display_pr_readings(left_reading, right_reading);
+
+		// The right sensor reading is greater than the left motor
+		// by about .250 voltz.
+		if (right_reading >= 0.250)
+		{
+			right_reading -= 0.250;
+		} else {
+			right_reading = 0;
+		}
+
+		int speed_scale_constant = 75;
+
+		switch(desired_behavior)
+		{
+			case(SS_INHIBITORY):{
+				// Make sensor reading inversely proportional to 
+				// motor speed
+				float MAX_left_voltage = 4.40;
+				float MAX_right_voltage = 4.74;
+
+				float left_motor_speed = MAX_left_voltage - left_reading;
+				float right_motor_speed = MAX_right_voltage - right_reading;
+
+				set_motor_speeds(left_motor_speed * speed_scale_constant, right_motor_speed * speed_scale_constant);
+
+				break;
+			}
+			case(OS_INHIBITORY):{
+				// Make sensor reading inversely proportional to
+				// motor speed
+				float MAX_left_voltage = 4.40;
+				float MAX_right_voltage = 4.74;
+
+				float left_motor_speed = MAX_left_voltage - left_reading;
+				float right_motor_speed = MAX_right_voltage - right_reading;
+
+				// Intentionally have the left motor mapped to the right
+				// sensor and the right motor mapped to the right sensor.
+				set_motor_speeds(left_motor_speed * speed_scale_constant, right_motor_speed * speed_scale_constant);
+			
+				break;
+			}
+			case(SS_EXCITATORY):{
+				set_motor_speeds((int)left_reading * speed_scale_constant, (int)right_reading * speed_scale_constant);	
+	
+				break;
+			}
+			case(OS_EXCITATORY):{
+				// Intentionally have the left motor mapped to the right
+				// sensor and the right motor mapped to the right sensor.
+				set_motor_speeds((int)right_reading * speed_scale_constant, (int)left_reading * speed_scale_constant);
+
+				break;
+			} default: {
+				break;
+			}
+		}
+	}
+}
+
+
+// The sensor on the "same side" of the motor speeds up
+// with greater light intensity (i.e., the right sensor influences
+// the right motor and the left motor influence the left motor).
+void ss_excititory_CRUISE (void)
+{
+
+
+
+
+
+	// Excititory (motor speeds up with light intensity
+	
+	
+}
+
 
 // @brief: Avoid obstacles using the IR sensors.
 void IR_AVOID (void)
@@ -86,22 +196,5 @@ void IR_AVOID (void)
 	}
 }
 
-void CRUISE (void)
-{
-	// Drive the robot forward 4 inches non-blocking function
-	move_forward_in_inches_stnb(4, 150);
-	
-}
 
-// @brief: Provides higher level control between CRUISE()
-//     and IR_AVOID().
-void app_main (void)
-{	
-	while ( 1 ) {
-		
-		IR_AVOID();
-		
-		CRUISE();	
-	
-	}
-}
+

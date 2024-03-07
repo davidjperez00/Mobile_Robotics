@@ -9,10 +9,11 @@
 #include "capi324v221.h"
 #include "stdbool.h"
 #include "src/app.h"
-#include "avr/interrupt.h"
 
 void CBOT_main(void)
 {
+	// Initialize the LCD subsystem
+	LCD_open();
 	
 	// Initialize the servo motor system
 	STEPPER_open();
@@ -23,6 +24,6 @@ void CBOT_main(void)
 	// Set the voltage reference (we're using 5v reference).
 	ADC_set_VREF(ADC_VREF_AVCC);
 		
-	app_main();
+	app_main(SS_EXCITATORY);
 }
 
