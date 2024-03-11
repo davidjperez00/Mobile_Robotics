@@ -1,10 +1,10 @@
 /*
  * Auth:   David Perez
  * File:   app.c
- * Date:   2/21/2024
+ * Date:   3/10/2024
  * Course: ECEN3450-Mobile Robotics I
- * Lab#:   Lab 3
- * Desc :  Provides application level control for IR sensor object avoidance.
+ * Lab#:   Lab 4
+ * Desc :  Provides application level control for photo-resistor inhibitor or excitatory behavior.
  */ 
 
 #include "stdio.h"
@@ -13,6 +13,7 @@
 #include "motor_control.h"
 #include "capi324v221.h"
 
+// @brief: Read and return the front right mounted photo-resistor sensor voltage.
 float read_right_pr_sensor_voltage (void)
 {
 	// Set the channel we will sample from (right photo-resistor sensor)
@@ -25,6 +26,7 @@ float read_right_pr_sensor_voltage (void)
 	return ( ( sample * 5.0f) / 1024);
 }
 
+// @brief: Read and return the front left mounted photo-resistor sensor voltage.
 float read_left_pr_sensor_voltage (void)
 {
 	// Set the channel we will sample from (left photo-resistor sensor)
@@ -37,8 +39,8 @@ float read_left_pr_sensor_voltage (void)
 	return ( ( sample * 5.0f) / 1024);
 }
 
-
-
+// @brief: Display the front left and right photo-resistor voltage
+//     readings to the LCD display.
 void display_pr_readings(float left_sensor, float right_sensor)
 {
 	// Create a string with both values:
@@ -70,7 +72,7 @@ void app_main (ReactiveBehavior desired_behavior)
 		display_pr_readings(left_reading, right_reading);
 
 		// The right sensor reading is greater than the left motor
-		// by about .250 voltz.
+		// by about .250 volts.
 		if (right_reading >= 0.250)
 		{
 			right_reading -= 0.250;
@@ -127,74 +129,3 @@ void app_main (ReactiveBehavior desired_behavior)
 		}
 	}
 }
-
-
-// The sensor on the "same side" of the motor speeds up
-// with greater light intensity (i.e., the right sensor influences
-// the right motor and the left motor influence the left motor).
-void ss_excititory_CRUISE (void)
-{
-
-
-
-
-
-	// Excititory (motor speeds up with light intensity
-	
-	
-}
-
-
-// @brief: Avoid obstacles using the IR sensors.
-void IR_AVOID (void)
-{
-	// If both sensors detect object turn the robot
-	// in an arbitrary direction (left is chosen)
-	if (ATTINY_get_IR_state(ATTINY_IR_BOTH)){
-		
-		// Stop the robots forward motion
-		STEPPER_stop(STEPPER_BOTH, STEPPER_BRK_ON);
-
-		// Back up robot away from object
-		move_backwards_in_inches_stwt(3);
-		
-		// Turn right
-		reverse_backup_60_degrees(false);
-		
-		return;
-	}
-	
-	// Check if object is detected to the left of the CEENBoT
-	if (ATTINY_get_IR_state(ATTINY_IR_LEFT)){
-		
-		// Stop the robot
-		STEPPER_stop(STEPPER_BOTH, STEPPER_BRK_ON);
-		
-		// Back up robot away from object
-		move_backwards_in_inches_stwt(3);
-		
-		// Turn right
-		reverse_backup_60_degrees(false);
-		
-		return;
-		
-	}
-	
-	// Check if object is detected in to the right of the CEENBoT
-	if (ATTINY_get_IR_state(ATTINY_IR_RIGHT)){
-			
-		// Stop the robot
-		STEPPER_stop(STEPPER_BOTH, STEPPER_BRK_ON);
-		
-		// Back up robot away from object
-		move_backwards_in_inches_stwt(3);
-				
-		// Turn right
-		reverse_backup_60_degrees(true);	
-		
-		return;
-	}
-}
-
-
-

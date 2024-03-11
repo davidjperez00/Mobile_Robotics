@@ -1,9 +1,9 @@
 /*
  * Auth:   David Perez
  * File:   app.h
- * Date:   2/18/2024
+ * Date:   3/10/2024
  * Course: ECEN3450-Mobile Robotics I
- * Lab#:   Lab 3
+ * Lab#:   Lab 4
  * Desc :  Header file for app.c
  */  
 

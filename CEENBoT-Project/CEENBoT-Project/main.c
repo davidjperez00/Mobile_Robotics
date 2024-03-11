@@ -1,8 +1,8 @@
 /*
  * Auth:   David Perez
- * Date:   2/21/2024
+ * Date:   3/10/2024
  * Course: ECEN3450-Mobile Robotics I
- * Lab#:   Lab 3
+ * Lab#:   Lab 4
  * Desc :  Main file for controlling the CEENBoT robot.
  */ 
 
@@ -23,7 +23,10 @@ void CBOT_main(void)
 
 	// Set the voltage reference (we're using 5v reference).
 	ADC_set_VREF(ADC_VREF_AVCC);
-		
+	
+	// Changing this input determines the mapping of
+	// sensor to motor and if the robot should speed
+	// up or slow down given a light intensity. 
 	app_main(SS_EXCITATORY);
 }
 

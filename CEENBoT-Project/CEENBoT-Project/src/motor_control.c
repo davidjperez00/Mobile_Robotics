@@ -1,8 +1,8 @@
 /*
  * Auth:   David Perez
- * Date:   2/21/2024
+ * Date:   3/10/2024
  * Course: ECEN3450-Mobile Robotics I
- * Lab#:   Lab 3
+ * Lab#:   Lab 4
  * Desc :  Provides motor control functionality to drive servo motors.
  */ 
 
@@ -126,6 +126,7 @@ void reverse_backup_60_degrees(bool turn_left)
 }
 
 
+// @brief: Set a velocity of the left and right stepper motor (revolutions/second).
 void set_motor_speeds(float left_motor_speed, int right_motor_speed)
 {
 	STEPPER_set_speed(STEPPER_LEFT, left_motor_speed);
