@@ -147,38 +147,38 @@ void info_display( volatile MOTOR_ACTION *pAction )
 	{
 		LCD_clear();
 				
-		// Display information based on the current 'ROBOT STATE'.
-		switch( pAction->state )
-		{
-					
-			case STARTUP:
-					
-			LCD_printf("Starting the Program...\n");
-					
-			break;
-					
-			case EXPLORING:
-					
-			LCD_printf( "Exploring...\n" );
-					
-			break;
-					
-			case AVOIDING:
-					
-			LCD_printf("Avoiding...\n");
-					
-			break;
-					
-			case HOMING:
-					
-			LCD_printf("Homing...\n");
-					
-			break;
-					
-					
-			default:
-			LCD_printf( "Unknown state!\n" );
-		} // end switch()
+		//// Display information based on the current 'ROBOT STATE'.
+		//switch( pAction->state )
+		//{
+					//
+			//case STARTUP:
+					//
+			//LCD_printf("Starting the Program...\n");
+					//
+			//break;
+					//
+			//case EXPLORING:
+					//
+			//LCD_printf( "Exploring...\n" );
+					//
+			//break;
+					//
+			//case AVOIDING:
+					//
+			//LCD_printf("Avoiding...\n");
+					//
+			//break;
+					//
+			//case HOMING:
+					//
+			//LCD_printf("Homing...\n");
+					//
+			//break;
+					//
+					//
+			//default:
+			//LCD_printf( "Unknown state!\n" );
+		//} // end switch()
 				
 		// Note the new state in effect.
 		previous_state = pAction->state;
@@ -469,6 +469,21 @@ BOOL isLightIntenseEnough(float left_intensity, float right_intensity) {
 
 // LIGHT_FOLLOW behavior
 void LIGHT_FOLLOW(volatile MOTOR_ACTION *pAction, volatile SENSOR_DATA *pLightSensors) {
+	
+	// START TODO REMOVE: Testing code
+	// Create a string with both values:
+	char lcd_string[60];
+		
+	// Populate string with sensor voltages
+	sprintf(lcd_string, "left_sensor = %.03f\r\n right_sensor = %.04f\r\n", pLightSensors->voltage_left, pLightSensors->voltage_right);
+
+	// clear the display before printing to it:
+	LCD_clear();
+
+	// Put string on LCD display.
+	LCD_printf(lcd_string);
+	// END TODO
+	
 			
 	// Check if the average light intensity is greater than the threshold
 	if (isLightIntenseEnough(pLightSensors->voltage_left, pLightSensors->voltage_right)) {
@@ -569,7 +584,7 @@ void CBOT_main( void )
 		// Perform light-following behavior
 		LIGHT_FOLLOW(&action, &sensor_data);
 				
-		LIGHT_OBSERVE();
+		LIGHT_OBSERVE(&action, &sensor_data);
 				
 		// Perform the action of highest priority.
 		act( &action );
