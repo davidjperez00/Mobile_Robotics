@@ -52,6 +52,9 @@
 // Define a threshold minimum value for light intensity
 #define LIGHT_MIN_THRESHOLD 2.0f // Adjust this value as needed
 
+// Threshold for determining if the robot is close to a light source.
+#define MIN_OBSERVE_VOLTAGE 2.50
+
 #define __RESET_ACTION( motor_action )	\
 do {								\
 	( motor_action ).speed_L = 0;		\
@@ -471,6 +474,8 @@ BOOL isLightIntenseEnough(float left_intensity, float right_intensity) {
 void LIGHT_FOLLOW(volatile MOTOR_ACTION *pAction, volatile SENSOR_DATA *pLightSensors) {
 	
 	// START TODO REMOVE: Testing code
+	/// l = 2.33v
+	// R = 2.77V
 	// Create a string with both values:
 	char lcd_string[60];
 		
@@ -507,8 +512,37 @@ void LIGHT_FOLLOW(volatile MOTOR_ACTION *pAction, volatile SENSOR_DATA *pLightSe
 		
 void LIGHT_OBSERVE(volatile MOTOR_ACTION *pAction, volatile SENSOR_DATA *pLightSensors)
 {
-			
+	// Get the average light intensity
+	float intensity_avg = (pLightSensors->voltage_left - pLightSensors->voltage_right) / 2.0f;			
+
+	// Determine if we are 4-5 inches from the light source via thresholding
+	if (intensity_avg > MIN_OBSERVE_VOLTAGE)
+	{
+		// Stop the robot
+		STEPPER_stop( STEPPER_BOTH, STEPPER_BRK_OFF );
+		
+		// Wait some time to "observe"
+		TMRSRVC_delay( TMR_SECS( 3 ) );
+		
+		// Back up...
+		STEPPER_move_stwt( STEPPER_BOTH,
+		STEPPER_REV, 150, 200, 400, STEPPER_BRK_OFF,
+		STEPPER_REV, 150, 200, 400, STEPPER_BRK_OFF );
+				
+		// ... and turn Left ~90-deg.
+		STEPPER_move_stwt( STEPPER_BOTH,
+		STEPPER_REV, DEG_90, 200, 400, STEPPER_BRK_OFF,
+		STEPPER_FWD, DEG_90, 200, 400, STEPPER_BRK_OFF );
+		
+		// Update state, and set future motor actions
+		pAction->state = AVOIDING;
+		pAction->speed_L = 200;
+		pAction->speed_R = 200;
+		pAction->accel_L = 400;
+		pAction->accel_R = 400;
+	}
 }
+
 
 // -------------------------------------------- //
 void act( volatile MOTOR_ACTION *pAction )
