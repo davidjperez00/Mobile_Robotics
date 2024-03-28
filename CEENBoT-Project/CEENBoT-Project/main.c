@@ -115,9 +115,10 @@ typedef struct SENSOR_DATA_TYPE {
 			
 	float voltage_right;		//Holds the state of the Left photo resistor
 	float voltage_left;		//Holds the state of the Right photo resistor
-			
-			
-	// *** Add your -own- parameters here.
+	
+	// Holds the distance of object from robot as sensed by
+	// the ultrasonic sensor.
+	unsigned long int usonic_dist_cm;
 			
 } SENSOR_DATA;
 
@@ -130,11 +131,13 @@ volatile MOTOR_ACTION action;	// This variable holds parameters that determine
 // ---------------------- Prototypes:
 void IR_sense( volatile SENSOR_DATA *pSensors, TIMER16 interval_ms );
 void Photo_sense( volatile SENSOR_DATA *pLightSensors, TIMER16 interval_ms );
+void sonar_sense (volatile SENSOR_DATA *sensor_struct, TIMER16 interval_ms );
 void explore( volatile MOTOR_ACTION *pAction );
 void IR_avoid( volatile MOTOR_ACTION *pAction, volatile SENSOR_DATA *pSensors );
 void act( volatile MOTOR_ACTION *pAction );
 void info_display( volatile MOTOR_ACTION *pAction );
 void LIGHT_OBSERVE(volatile MOTOR_ACTION *pAction, volatile SENSOR_DATA *pLightSensors);
+void SONAR_AVOID(volatile MOTOR_ACTION *pAction, volatile SENSOR_DATA *pLightSensors);
 BOOL compare_actions( volatile MOTOR_ACTION *a, volatile MOTOR_ACTION *b );
 
 // ---------------------- Convenience Functions:
@@ -351,6 +354,69 @@ void Photo_sense( volatile SENSOR_DATA *pLightSensors, TIMER16 interval_ms )
 } // end sense()
 
 
+void sonar_sense (volatile SENSOR_DATA *sensor_struct, TIMER16 interval_ms )
+{
+		// Sense must know if it's already sensing.
+		//
+		// NOTE: 'BOOL' is a custom data type offered by the CEENBoT API.
+		//
+		static BOOL timer_started = FALSE;
+		
+		// The 'sense' timer is used to control how often gathering sensor
+		// data takes place. The pace at which this happens needs to be
+		// controlled. So we're forced to use TIMER OBJECTS along with the
+		// TIMER SERVICE. It must be 'static' because the timer object must remain
+		// 'alive' even when it is out of scope -- otherwise the program will crash.
+		static TIMEROBJ sonar_sense_timer;
+		
+		// If this is the FIRST time that sense() is running, we need to start the
+		// sense timer. We do this ONLY ONCE!
+		if ( timer_started == FALSE )
+		{
+			// Start the 'sense timer' to tick on every 'interval_ms'.
+			//
+			// NOTE: You can adjust the delay value to suit your needs.
+			//
+			TMRSRVC_new( &sonar_sense_timer, TMRFLG_NOTIFY_FLAG, TMRTCM_RESTART,
+			interval_ms );
+			// Mark that the timer has already been started.
+			timer_started = TRUE;
+		} // end if()
+		// Otherwise, just do the usual thing and just 'sense'.
+		else
+		{
+			// Only read the sensors when it is time to do so (e.g., every
+			// 125ms). Otherwise, do nothing.
+			if ( TIMER_ALARM( sonar_sense_timer ) )
+			{
+				unsigned long int usonic_time_us; // Holds 'trip' time in micro-seconds
+				SWTIME usonic_time_ticks; // Hold 'ticks' from STOPWATCH
+				float distance_cm;
+				
+				// Ping ONCE and store 'ticks' elapsed from STOPWATCH in variable.
+				usonic_time_ticks = USONIC_ping();
+							
+				// Convert from 'ticks' to 'us'.
+				// Note, type casting necessary to prevent overflow.
+				usonic_time_us = 10 * (( unsigned long int ) ( usonic_time_ticks ));
+				
+				// Convert to 'cm' using d = 1/2 * (v_air) * t, where 
+				// the 1/2 is to account for sensor ping to travel to object
+				// and back. And V_air is the travel time of sound in air (344.8 ms/s)
+				distance_cm = 0.01724 * usonic_time_us;
+				
+				// TODO: remove after testing distance measurements.
+				LCD_clear();
+				LCD_printf(" Dist = %.3f \n", distance_cm);
+												
+				// Store the voltage readings in the provided structure
+				sensor_struct->usonic_dist_cm = distance_cm;
+				
+				TIMER_SNOOZE( sonar_sense_timer );
+			} // end if()
+		} // end else.
+}
+
 // -------------------------------------------- //
 void explore( volatile MOTOR_ACTION *pAction )
 {
@@ -527,6 +593,14 @@ void LIGHT_OBSERVE(volatile MOTOR_ACTION *pAction, volatile SENSOR_DATA *pLightS
 }
 
 
+void SONAR_AVOID(volatile MOTOR_ACTION *pAction, volatile SENSOR_DATA *pLightSensors)
+{
+	
+	
+	
+}
+
+
 // -------------------------------------------- //
 void act( volatile MOTOR_ACTION *pAction )
 {
@@ -563,6 +637,7 @@ void CBOT_main( void )
 	LCD_open();			// Open the LCD subsystem module.
 	STEPPER_open();		// Open the STEPPER subsystem module.
 	ADC_open();			//Open the ADC subsystem module.
+	USONIC_open();      // Open the Ultrasonic subsystem module.
 			
 	// Reset the current motor action.
 	__RESET_ACTION( action );
@@ -590,6 +665,9 @@ void CBOT_main( void )
 				
 		// (Light sense happens every 125ms).
 		Photo_sense(&sensor_data, 125);
+		
+		// Get object distance from ultrasonic sensor.
+		sonar_sense(&sensor_data, 50);
 				
 		// Behaviors.
 		explore( &action );
