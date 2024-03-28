@@ -118,7 +118,7 @@ typedef struct SENSOR_DATA_TYPE {
 	
 	// Holds the distance of object from robot as sensed by
 	// the ultrasonic sensor.
-	unsigned long int usonic_dist_cm;
+	float usonic_dist_cm;
 			
 } SENSOR_DATA;
 
@@ -595,8 +595,24 @@ void LIGHT_OBSERVE(volatile MOTOR_ACTION *pAction, volatile SENSOR_DATA *pLightS
 
 void SONAR_AVOID(volatile MOTOR_ACTION *pAction, volatile SENSOR_DATA *pLightSensors)
 {
-	
-	
+	// Check if the object is within 10 cm of the robot
+	signed short int speed_L; // Speed for LEFT motor.
+	float obj_distance = pLightSensors->usonic_dist_cm;
+
+	if (pLightSensors->usonic_dist_cm == 0) {
+		obj_distance = 12; // Set to a default value if no object is detected
+	}
+
+	// Calculate the angle to turn based on distance from object
+	float turn_angle_speed = 1000 / obj_distance; 
+
+	speed_L = 200 + turn_angle_speed;
+
+	// Update state, and set future motor actions
+	pAction->speed_L = speed_L;
+	pAction->speed_R = 200;
+	pAction->accel_L = 400;
+	pAction->accel_R = 400;
 	
 }
 
@@ -679,7 +695,11 @@ void CBOT_main( void )
 		// Perform light-following behavior
 		LIGHT_FOLLOW(&action, &sensor_data);
 				
-		LIGHT_OBSERVE(&action, &sensor_data);
+		// Perform light-observing behavior
+		// LIGHT_OBSERVE(&action, &sensor_data);
+
+		// Perform sonar avoidance behavior
+		SONAR_AVOID(&action, &sensor_data);
 				
 		// Perform the action of highest priority.
 		act( &action );
